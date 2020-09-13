@@ -1,0 +1,7 @@
+.App {
+  text-align: center;
+}
+
+table tbody tr:hover {
+  background-color: #cbe0e5;
+}
