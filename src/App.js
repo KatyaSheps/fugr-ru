@@ -19,15 +19,15 @@ class App extends Component{
             {
                 "id" : 2,
                 "firstName" : "Petya",
-                "lastName" : "Zalupkin",
-                "email" : "p.zalupkin@yandex.ru",
+                "lastName" : "Zagupkin",
+                "email" : "p.zagupkin@yandex.ru",
                 "phone" : "4534646",
             },
             {
                 "id" : 2,
                 "firstName" : "Masha",
-                "lastName" : "Kakulkina",
-                "email" : "kakulkina@yandex.ru",
+                "lastName" : "Karulkina",
+                "email" : "karulkina@yandex.ru",
                 "phone" : "111222333",
             },
         ]
@@ -35,15 +35,21 @@ class App extends Component{
             showAddField: false,
         };
         this.setShowAddField = this.setShowAddField.bind(this);
-        this.setHideAddField = this.setHideAddField.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.getAddData = this.getAddData.bind(this);
     }
 
     setShowAddField() {
         this.setState({ showAddField: true });
     }
 
-    setHideAddField() {
+    addItem() {
+        this.data.push(this.state.addItemData);
         this.setState({ showAddField: false });
+    }
+
+    getAddData(data) {
+        this.setState({ addItemData: data});
     }
 
     render() {
@@ -67,7 +73,8 @@ class App extends Component{
                         <Table
                             items={this.data}
                             showAddField={this.state.showAddField}
-                            onAdd={this.setHideAddField}
+                            onAdd={this.addItem}
+                            onAddDataChanged={this.getAddData}
                         />
                     </div>
                 </div>

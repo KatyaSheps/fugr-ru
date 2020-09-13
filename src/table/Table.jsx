@@ -7,14 +7,15 @@ import AddItem from "../add-item/AddItem";
 export default class Table extends Component {
 
     render() {
-        const {onAdd} = this.props;
+        const {onAdd, onAddDataChanged} = this.props;
         return (
             <>
                 <table className="table table-bordered">
                     <Thead />
                     <tbody>
                     <TrList items={this.props.items}/>
-                    {this.props.showAddField && <TrAddItemFields />}
+                    {this.props.showAddField &&
+                        <TrAddItemFields onAddDataChanged={(data) => onAddDataChanged(data)}/>}
                     </tbody>
                 </table>
                 {this.props.showAddField && <AddItem onAdd={() => onAdd()}/>}
