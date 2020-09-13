@@ -8,35 +8,33 @@ class App extends Component{
     constructor(props) {
         super(props);
 
-        this.data = [
-            {
-                "id" : 1,
-                "firstName" : "Vasya",
-                "lastName" : "Pupkin",
-                "email" : "v.pupkin@yandex.ru",
-                "phone" : "947473",
-            },
-            {
-                "id" : 2,
-                "firstName" : "Petya",
-                "lastName" : "Zagupkin",
-                "email" : "p.zagupkin@yandex.ru",
-                "phone" : "4534646",
-            },
-            {
-                "id" : 2,
-                "firstName" : "Masha",
-                "lastName" : "Karulkina",
-                "email" : "karulkina@yandex.ru",
-                "phone" : "111222333",
-            },
-        ]
         this.state = {
             showAddField: false,
+            data: []
         };
+
         this.setShowAddField = this.setShowAddField.bind(this);
         this.addItem = this.addItem.bind(this);
         this.getAddData = this.getAddData.bind(this);
+    }
+
+    componentDidMount() {
+        fetch("http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        data: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
     setShowAddField() {
@@ -44,8 +42,12 @@ class App extends Component{
     }
 
     addItem() {
-        this.data.push(this.state.addItemData);
-        this.setState({ showAddField: false });
+        let data = this.state.data;
+        data.push(this.state.addItemData);
+        this.setState({
+            showAddField: false,
+            data: data
+        });
     }
 
     getAddData(data) {
@@ -71,7 +73,7 @@ class App extends Component{
                     <div className="row">
                         <SearchField />
                         <Table
-                            items={this.data}
+                            items={this.state.data}
                             showAddField={this.state.showAddField}
                             onAdd={this.addItem}
                             onAddDataChanged={this.getAddData}
